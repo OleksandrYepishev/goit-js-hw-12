@@ -1,7 +1,10 @@
    <div class="card">
         <h1 class="card-title"><img src="{{flag}}" alt="flag of {{name}}" class="card-flag">
             {{name}}</h1>
-        <p class="card-text"><span>Capital:</span> {{capital}}</p>
-        <p class="card-text"><span>Population:</span> {{population}}</p>
-        <p class="card-text"><span>Languages:</span> {{languages}}</p>
+        <p class="card-text"><span class ="card-text_title">Capital:</span> {{capital}}</p>
+        <p class="card-text"><span class ="card-text_title">Population:</span> {{population}}</p>
+        <p class="card-text"><span class ="card-text_title">Languages:</span> 
+        {{#each languages}}
+        {{this.name}}
+        {{/each}}</p>
     </div>

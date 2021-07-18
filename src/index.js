@@ -14,37 +14,36 @@ fetchCountryInput.addEventListener('input', debounce(onSearch,DEBOUNCE_DELAY));
 
 function onSearch(e) {
     e.preventDefault();
+   
     const country = e.target.value.trim();
-    console.log(country);
+    if (country === '') {
+        return clearSearchResults();
+    }
     
-
-    API.fetchCountries(country)
-        .then(renderCountryCard)
-        .catch((error) => console.log(error))
-        .finally(()=>countryReset());
-    
+    else {
+        API.fetchCountries(country)
+            .then(renderCountryCard)
+            .catch((error) => console.log(error))
+            .finally(clearSearchResults());
+    }
 }
 
 function renderCountryCard(countries) {
-    console.log(countries);
+    
       if (countries.length === 1) {
         countryInfo.insertAdjacentHTML('beforeend', countryCard(countries[0]));
       } 
-      else if (countries.length > 10) {
+    
+     else if (countries.length >= 2 && countries.length <= 10) {
+        countryList.insertAdjacentHTML('beforeend', countriesList(countries));
+      }
+          
+      else {
         Notiflix.Notify.info('Too many matches found. Please enter a more specific name.')
-      }
-      else if (countries.status === 404) {
-        Notiflix.Notify.failure('Oops, there is no country with that name');
-      }
-      else if (countries.length >= 2 && countries.length <= 10) {
-        countryList.insertAdjacentHTML('afterbegin', countriesList(countries));
-       
-      } 
-
+      }      
 }
 
-function countryReset() {
-    countryList.innerHtml = '';
-    countryCard.innerHtml = '';
-
+function clearSearchResults() {
+    countryList.innerHTML = '';
+    countryInfo.innerHTML = '';
 }
