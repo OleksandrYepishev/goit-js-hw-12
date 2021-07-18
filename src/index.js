@@ -15,6 +15,7 @@ fetchCountryInput.addEventListener('input', debounce(onSearch,DEBOUNCE_DELAY));
 function onSearch(e) {
     e.preventDefault();
     const country = e.target.value.trim();
+    console.log(country);
     
 
     API.fetchCountries(country)
